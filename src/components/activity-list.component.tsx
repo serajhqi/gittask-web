@@ -5,7 +5,7 @@ import LoadMore from "./load-more.component";
 export default function ActivityList() {
   const [count, setCount] = useState(3)
 
-  return <div className="flex flex-col border-2 border-black rounded-2xl">
+  return <div className="flex flex-col border-2 border-black rounded-2xl bg-white overflow-auto h-fit no-scrollbar">
     {new Array(count).fill(0).map((_, idx) =>
       <div key={idx} className="border-b-2 border-gray-500 last:border-b-0 border-dashed hover:bg-sky-50 first:rounded-t-2xl">
         <ActivityItem />
