@@ -5,8 +5,14 @@ import TaskList from "../components/task-list.component";
 // src/pages/Home.tsx
 export default function Home() {
   return <h1 className="flex gap-10">
-    <ProjectList />
-    <TaskList />
-    <ActivityList />
+    <div className="w-48 bg-gray-50">
+      <ProjectList />
+    </div>
+    <div className="w-80 ">
+      <TaskList />
+    </div>
+    <div className="w-80">
+      <ActivityList />
+    </div>
   </h1>;
 }

@@ -13,3 +13,11 @@
 body {
   font-family: "Roboto Mono", monospace;
 }
+
+.rs-btn-primary {
+  border-radius: 5px !important;
+  background-color: #f8d966 !important;
+  color: black !important;
+  font-weight: 600 !important;
+  border: 2px solid black !important;
+}

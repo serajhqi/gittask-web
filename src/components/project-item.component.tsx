@@ -1,5 +1,6 @@
 export default function ProjectItem() {
-  return <div>
-    project
+  return <div className="flex flex-col">
+    <div></div>
+    <div></div>
   </div>
 }
