@@ -9,6 +9,7 @@ import NotFound from './pages/not-found.page.tsx';
 import Settings from './pages/settings.page.tsx';
 import About from './pages/about.page.tsx';
 import Help from './pages/help.page.tsx';
+import Login from './pages/login.page.tsx';
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Home />,
+      },
+      {
+        path: '/login',
+        element: <Login />,
       },
       {
         path: '/settings',
