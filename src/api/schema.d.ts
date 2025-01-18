@@ -200,6 +200,16 @@ export interface components {
             readonly $schema?: string;
             token: string;
         };
+        PaginatedBodyProjectDTO: {
+            /**
+             * Format: uri
+             * @description A URL to the JSON Schema for this object.
+             */
+            readonly $schema?: string;
+            items: components["schemas"]["ProjectDTO"][] | null;
+            /** Format: int64 */
+            total: number;
+        };
         ProjectDTO: {
             /**
              * Format: uri
@@ -337,7 +347,9 @@ export interface operations {
                 offset?: number;
                 limit?: number;
             };
-            header?: never;
+            header?: {
+                Authorization?: string;
+            };
             path?: never;
             cookie?: never;
         };
@@ -349,7 +361,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ProjectDTO"][] | null;
+                    "application/json": components["schemas"]["PaginatedBodyProjectDTO"];
                 };
             };
             /** @description Error */
