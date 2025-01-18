@@ -1,7 +1,7 @@
 import { useObservable } from "@ngneat/react-rxjs";
 import { Button, Input } from "rsuite";
 import { GetUserStore } from "../store/user.store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
@@ -9,6 +9,10 @@ export default function Login() {
   const [loading] = useObservable(GetUserStore().loginLoading$)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+
+  useEffect(() => {
+    if (GetUserStore().GetIsLogin()) navigate("/")
+  }, [])
 
   function onClick() {
     GetUserStore().Login(email, password).then(() => {

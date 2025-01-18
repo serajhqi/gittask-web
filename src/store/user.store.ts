@@ -30,6 +30,8 @@ class UserStore {
   isLogin$ = store.pipe(select((state) => state.isLogin));
   loginLoading$ = store.pipe(select((state) => state.loginLoading));
 
+  GetIsLogin = () => store.query((state) => state.isLogin);
+
   constructor() {
     const initialState = store.getValue();
     if (initialState.token) {
