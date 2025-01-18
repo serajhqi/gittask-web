@@ -1,21 +1,21 @@
 import { useObservable } from "@ngneat/react-rxjs";
 import { Button, Input } from "rsuite";
-import { GetUserStore } from "../store/user.store";
+import { GetUserRepo } from "../store/user.store";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const navigate = useNavigate()
-  const [loading] = useObservable(GetUserStore().loginLoading$)
+  const [loading] = useObservable(GetUserRepo().loginLoading$)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
   useEffect(() => {
-    if (GetUserStore().GetIsLogin()) navigate("/")
+    if (GetUserRepo().GetIsLogin()) navigate("/")
   }, [])
 
   function onClick() {
-    GetUserStore().Login(email, password).then(() => {
+    GetUserRepo().Login(email, password).then(() => {
       navigate("/")
     })
   }

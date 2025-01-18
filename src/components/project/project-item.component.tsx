@@ -1,8 +1,10 @@
-export default function ProjectItem() {
+import { ProjectDTO } from "../../api/types";
+
+export default function ProjectItem({ project }: { project?: ProjectDTO }) {
   return <div className="flex flex-col gap-3 p-3 cursor-pointer">
-    <div className="text-sm font-medium">Definitions 02</div>
+    <div className="text-sm font-medium">{project?.name}</div>
     <div className="text-xs whitespace-nowrap text-ellipsis overflow-hidden">
-      A description for this project goes here
+      {project?.description}
     </div>
   </div>
 }

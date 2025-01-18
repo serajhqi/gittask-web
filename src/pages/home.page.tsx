@@ -6,8 +6,11 @@ import ActivityDetails from "../components/activity/activity-details.component";
 
 // src/pages/Home.tsx
 export default function Home() {
+
+
   return <h1 className="flex gap-4 h-[calc(100vh-34px)] p-6">
     <div className="w-56 h-full gap-4 flex flex-col">
+
       <ProjectList />
     </div>
     <div className="w-80 h-full gap-4 flex flex-col">

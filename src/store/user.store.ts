@@ -26,11 +26,12 @@ export const persist = persistState(store, {
 });
 // ---------------------------------------------
 
-class UserStore {
+class UserRepo {
   isLogin$ = store.pipe(select((state) => state.isLogin));
   loginLoading$ = store.pipe(select((state) => state.loginLoading));
 
   GetIsLogin = () => store.query((state) => state.isLogin);
+  GetToken = () => store.query((state) => state.token);
 
   constructor() {
     const initialState = store.getValue();
@@ -59,14 +60,18 @@ class UserStore {
       store.update((state) => ({ ...state, loginLoading: false }));
     }
   }
+
+  Logout(){
+    store.next(defaultState)
+  }
 }
 
 // ---------------------------------------------
 
-let userStore: UserStore;
-export function GetUserStore(): UserStore {
-  if (!userStore) {
-    userStore = new UserStore();
+let userRepo: UserRepo;
+export function GetUserRepo(): UserRepo {
+  if (!userRepo) {
+    userRepo = new UserRepo();
   }
-  return userStore;
+  return userRepo;
 }
