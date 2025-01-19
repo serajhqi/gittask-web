@@ -1,6 +1,20 @@
-import { Link, Outlet } from 'react-router-dom';
+import { useObservable } from '@ngneat/react-rxjs';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { GetUserRepo } from './store/user.store';
+import { useEffect } from 'react';
+import ProjectsModal from './components/project/projects-modal.component';
 
 export default function App() {
+
+  const navigate = useNavigate()
+  const [isLogin] = useObservable(GetUserRepo().isLogin$)
+
+  useEffect(() => {
+    if (!isLogin) {
+      navigate("/login")
+    }
+  }, [isLogin])
+
   return (
     <div className="bg-slate-500 h-screen flex flex-col justify-between">
       {/* <nav className="mb-6">
@@ -40,6 +54,9 @@ export default function App() {
           <Link to="/about" >
             about
           </Link>
+        </div>
+        <div className='flex-1 flex justify-end'>
+          <ProjectsModal />
         </div>
       </div>
     </div>

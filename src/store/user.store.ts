@@ -61,8 +61,8 @@ class UserRepo {
     }
   }
 
-  Logout(){
-    store.next(defaultState)
+  Logout() {
+    store.next(defaultState);
   }
 }
 

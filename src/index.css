@@ -32,3 +32,15 @@ body {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+.rs-modal-dialog {
+  border-radius: 15px !important;
+  background-color: #f8d966 !important;
+  color: black !important;
+  font-weight: 600 !important;
+  border: 2px solid black !important;
+}
+
+.rs-modal-content {
+  border-radius: 15px !important;
+}

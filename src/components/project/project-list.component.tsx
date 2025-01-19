@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import LoadMore from "./load-more.component";
-import ProjectItem from "./project/project-item.component";
+import LoadMore from "../load-more.component";
+import ProjectItem from "./project-item.component";
 import { useObservable } from "@ngneat/react-rxjs";
-import { GetProjectRepo } from "../store/project.store";
+import { GetProjectRepo } from "../../store/project.store";
 
 const DEFAULT_LIMIT = 2;
 const DEFAULT_INCREMENT = 2;
