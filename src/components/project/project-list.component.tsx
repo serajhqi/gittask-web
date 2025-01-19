@@ -10,6 +10,7 @@ export default function ProjectList() {
 
   const [projects] = useObservable(GetProjectRepo().projects$)
   const [total] = useObservable(GetProjectRepo().total$)
+  const [selected] = useObservable(GetProjectRepo().selected$)
   const [offset, setOffset] = useState(0);
 
   useEffect(() => {
@@ -20,7 +21,7 @@ export default function ProjectList() {
   return <div className="flex flex-col border-2 border-black rounded-2xl bg-white overflow-auto h-fit no-scrollbar">
     {projects?.map((project) =>
       <div key={project.id} className="border-b-2 border-black last:border-b-0 hover:bg-amber-50 first:rounded-t-2xl">
-        <ProjectItem project={project} />
+        <ProjectItem project={project} selected={selected && selected.id == project.id} />
       </div>)
     }
     <div className="p-2 bg-red-100 flex justify-end rounded-b-2xl">
