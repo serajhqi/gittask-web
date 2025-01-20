@@ -29,6 +29,9 @@ importers:
       rsuite:
         specifier: ^5.76.3
         version: 5.76.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      rxjs:
+        specifier: ^7.8.1
+        version: 7.8.1
     devDependencies:
       '@eslint/js':
         specifier: ^9.17.0

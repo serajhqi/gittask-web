@@ -9,8 +9,8 @@ const DEFAULT_INCREMENT = 2;
 export default function ProjectList() {
 
   const [projects] = useObservable(GetProjectRepo().projects$)
-  const [total] = useObservable(GetProjectRepo().total$)
-  const [selected] = useObservable(GetProjectRepo().selected$)
+  const [total] = useObservable(GetProjectRepo().projectsTotal$)
+  const [selected] = useObservable(GetProjectRepo().selectedProject$)
   const [offset, setOffset] = useState(0);
 
   useEffect(() => {

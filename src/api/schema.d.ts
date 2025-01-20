@@ -62,6 +62,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/projects/{project_id}/tasks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** all project tasks */
+        get: operations["get-all-tasks"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/tasks/{id}": {
         parameters: {
             query?: never;
@@ -207,6 +224,16 @@ export interface components {
              */
             readonly $schema?: string;
             items: components["schemas"]["ProjectDTO"][] | null;
+            /** Format: int64 */
+            total: number;
+        };
+        PaginatedBodyTaskDTO: {
+            /**
+             * Format: uri
+             * @description A URL to the JSON Schema for this object.
+             */
+            readonly $schema?: string;
+            items: components["schemas"]["TaskDTO"][] | null;
             /** Format: int64 */
             total: number;
         };
@@ -395,6 +422,42 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ProjectDTO"];
+                };
+            };
+            /** @description Error */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
+                };
+            };
+        };
+    };
+    "get-all-tasks": {
+        parameters: {
+            query?: {
+                offset?: number;
+                limit?: number;
+            };
+            header?: {
+                Authorization?: string;
+            };
+            path: {
+                project_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedBodyTaskDTO"];
                 };
             };
             /** @description Error */

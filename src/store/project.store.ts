@@ -8,14 +8,14 @@ import {
 } from "@ngneat/elf-persist-state";
 
 interface ProjectState {
-  projectsLoading: boolean;
-  projects?: ProjectDTO[] | null;
-  total?: number;
-  selected?: ProjectDTO;
+  ProjectsLoading: boolean;
+  Projects?: ProjectDTO[] | null;
+  ProjectsTotal?: number;
+  SelectedProject?: ProjectDTO;
 }
 
 const defaultState: ProjectState = {
-  projectsLoading: false,
+  ProjectsLoading: false,
 };
 
 const store = createStore(
@@ -27,17 +27,20 @@ export const persist = persistState(store, {
   key: "project",
   storage: localStorageStrategy,
   source: () =>
-    store.pipe(excludeKeys(["projectsLoading", "projects", "total"])),
+    store.pipe(excludeKeys(["ProjectsLoading", "Projects", "ProjectsTotal"])),
 });
 // -----------------------------------------
 class ProjectRepo {
-  projectsLoading$ = store.pipe(select((state) => state.projectsLoading));
-  projects$ = store.pipe(select((state) => state.projects));
-  total$ = store.pipe(select((state) => state.total));
-  selected$ = store.pipe(select((state) => state.selected));
+  projectsLoading$ = store.pipe(select((state) => state.ProjectsLoading));
+  projects$ = store.pipe(select((state) => state.Projects));
+  projectsTotal$ = store.pipe(select((state) => state.ProjectsTotal));
+  selectedProject$ = store.pipe(select((state) => state.SelectedProject));
+
+  getSelectedProject = () => store.query((state) => state.SelectedProject);
 
   async GetProjects(offset: number = 0, limit: number = 10) {
-    store.update((state) => ({ ...state, projectsLoading: true }));
+    store.update((state) => ({ ...state, ProjectsLoading: true }));
+    store.update((state) => ({ ...state, ProjectsLoading: true }));
     try {
       const { data } = await GetApi().GET("/projects", {
         params: {
@@ -49,8 +52,8 @@ class ProjectRepo {
       });
       store.update((state) => ({
         ...state,
-        total: data?.total,
-        projects: [...(state.projects || []), ...(data?.items || [])]
+        ProjectsTotal: data?.total,
+        Projects: [...(state.Projects || []), ...(data?.items || [])]
           //deduplicate
           .reduce<ProjectDTO[]>((acc, current) => {
             if (!acc.some((item) => item.id == current.id)) {
@@ -60,12 +63,12 @@ class ProjectRepo {
           }, []),
       }));
     } finally {
-      store.update((state) => ({ ...state, projectsLoading: false }));
+      store.update((state) => ({ ...state, ProjectsLoading: false }));
     }
   }
 
   SetSelected(project: ProjectDTO) {
-    store.update((state) => ({ ...state, selected: project }));
+    store.update((state) => ({ ...state, SelectedProject: project }));
   }
 }
 
