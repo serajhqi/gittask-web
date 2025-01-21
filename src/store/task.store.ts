@@ -13,10 +13,12 @@ interface TaskState {
   Tasks?: TaskDTO[] | null;
   TasksTotal?: number;
   TasksLoading: boolean;
+  Offset: number;
 }
 
 const defaultState: TaskState = {
   TasksLoading: false,
+  Offset: 0,
 };
 
 const store = createStore({ name: "task" }, withProps<TaskState>(defaultState));
@@ -24,7 +26,7 @@ export const persist = persistState(store, {
   key: "task",
   storage: localStorageStrategy,
   source: () =>
-    store.pipe(excludeKeys(["TasksLoading", "Tasks", "TasksTotal"])),
+    store.pipe(excludeKeys(["TasksLoading", "Tasks", "TasksTotal", "Offset"])),
 });
 // ---------------------------------
 class TaskRepo {
@@ -32,24 +34,30 @@ class TaskRepo {
   tasksTotal$ = store.pipe(select((state) => state.TasksTotal));
   tasksLoading$ = store.pipe(select((state) => state.TasksLoading));
   selectedTask$ = store.pipe(select((state) => state.SelectedTask));
+  offset$ = store.pipe(select((state) => state.Offset));
+
+  getOffset = () => store.query((state) => state.Offset);
+  setOffset(offset: number) {
+    store.update((state) => ({ ...state, Offset: offset }));
+  }
 
   constructor() {
-    // GetProjectRepo().selectedProject$.subscribe((project) => {
-    //   console.log({ project });
-    //   if (project?.id) {
-    //     this.wipeTasks();
-    //     this.getTasks();
-    //   }
-    // });
+    GetProjectRepo().selectedProject$.subscribe((project) => {
+      this.wipeTasks();
+      this.getTasks(project?.id);
+    });
+
+    this.offset$.subscribe((offset) =>
+      this.getTasks(GetProjectRepo().getSelectedProject()?.id, offset),
+    );
   }
 
   setSelected(task: TaskDTO) {
     store.update((state) => ({ ...state, SelectedTask: task }));
   }
 
-  async getTasks(offset: number = 0, limit: number = 10) {
+  async getTasks(project_id?: number, offset: number = 0, limit: number = 10) {
     store.update((state) => ({ ...state, TasksLoading: true }));
-    const project_id = GetProjectRepo().getSelectedProject()?.id;
     if (!project_id) {
       alert("not project selected");
       return;
@@ -83,7 +91,7 @@ class TaskRepo {
     }
   }
   wipeTasks() {
-    store.update((state) => ({ ...state, Tasks: undefined }));
+    store.update((state) => ({ ...state, Tasks: undefined, Offset: 0 }));
   }
 }
 // ---------------------------------
