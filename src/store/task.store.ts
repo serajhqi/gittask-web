@@ -52,7 +52,7 @@ class TaskRepo {
     );
   }
 
-  setSelected(task: TaskDTO) {
+  setSelected(task?: TaskDTO) {
     store.update((state) => ({ ...state, SelectedTask: task }));
   }
 
@@ -90,6 +90,7 @@ class TaskRepo {
       store.update((state) => ({ ...state, TasksLoading: false }));
     }
   }
+
   wipeTasks() {
     store.update((state) => ({ ...state, Tasks: undefined, Offset: 0 }));
   }
