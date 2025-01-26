@@ -96,6 +96,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/tasks/{id}/activities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** get task activities */
+        get: operations["get-task-activities"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/user/login": {
         parameters: {
             query?: never;
@@ -134,6 +151,27 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        ActivityDTO: {
+            /**
+             * Format: uri
+             * @description A URL to the JSON Schema for this object.
+             */
+            readonly $schema?: string;
+            branch: string;
+            commit_hash: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: int64 */
+            created_by: number;
+            description: string;
+            /** Format: int64 */
+            duration: number | null;
+            /** Format: int64 */
+            id: number;
+            /** Format: int64 */
+            task_id: number;
+            title: string;
+        };
         CommitRequestBody: {
             /**
              * Format: uri
@@ -491,6 +529,39 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["TaskDTO"];
+                };
+            };
+            /** @description Error */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorModel"];
+                };
+            };
+        };
+    };
+    "get-task-activities": {
+        parameters: {
+            query?: never;
+            header?: {
+                Authorization?: string;
+            };
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ActivityDTO"];
                 };
             };
             /** @description Error */
